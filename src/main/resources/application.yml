@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: formula1-team
+  profiles:
+    include:
+      - db
