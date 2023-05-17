@@ -1,10 +1,11 @@
 package com.ferrari.formula1_team.exception;
 
+import com.ferrari.formula1_team.enums.ExceptionMessageEnum;
+
 public class DriverNotFoundException extends RuntimeException{
 
      public DriverNotFoundException(){
-         //add enum
-         super("Driver not found!");
+         super(ExceptionMessageEnum.DRIVER_NOT_FOUND_EXCEPTION.name());
      }
 
 }

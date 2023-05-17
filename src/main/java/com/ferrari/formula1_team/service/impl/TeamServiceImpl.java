@@ -1,21 +1,24 @@
 package com.ferrari.formula1_team.service.impl;
 
 import com.ferrari.formula1_team.dto.response.ResponseDto;
-import com.ferrari.formula1_team.entity.Team;
+import com.ferrari.formula1_team.dto.response.TeamResponseDto;
 import com.ferrari.formula1_team.repository.TeamRepository;
 import com.ferrari.formula1_team.service.TeamService;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class TeamServiceImpl implements TeamService {
 
     private final TeamRepository teamRepository;
+    private final ModelMapper modelMapper;
 
     @Override
     public ResponseEntity<ResponseDto> updateTeamName(String name, Long id) {
@@ -32,7 +35,11 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
-    public List<Team> findAll() {
-        return teamRepository.findAll();
+    public List<TeamResponseDto> findAll() {
+
+        return teamRepository.findAll().stream()
+                .map(team -> modelMapper.map(team, TeamResponseDto.class))
+                .collect(Collectors.toList());
     }
+
 }

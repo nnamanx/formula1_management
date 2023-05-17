@@ -1,10 +1,13 @@
 package com.ferrari.formula1_team.service.impl;
 
+import com.ferrari.formula1_team.dto.response.ResponseDto;
 import com.ferrari.formula1_team.entity.Driver;
 import com.ferrari.formula1_team.exception.DriverNotFoundException;
 import com.ferrari.formula1_team.repository.DriverRepository;
 import com.ferrari.formula1_team.service.DriverService;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,6 +17,7 @@ import java.util.List;
 public class DriverServiceImpl implements DriverService {
 
     private final DriverRepository driverRepository;
+    private final ModelMapper modelMapper;
 
     @Override
     public List<Driver> findAll(String key) {
@@ -26,6 +30,13 @@ public class DriverServiceImpl implements DriverService {
         driverRepository.findById(id).
                 orElseThrow(DriverNotFoundException::new); //? it was ()->new DriverNotFoundException()
         return null;
+    }
+
+    @Override
+    public ResponseEntity<ResponseDto> removeDriver(long id) {
+        driverRepository.delete(driverRepository.findById(id)
+                .orElseThrow(DriverNotFoundException::new));
+        return ResponseEntity.ok(new ResponseDto("Driver is removed successfully!"));
     }
 
 }

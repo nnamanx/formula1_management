@@ -8,6 +8,5 @@ import java.util.List;
 
 @Repository
 public interface DriverRepository extends JpaRepository<Driver, Long> {
-
     List<Driver> findByNameLikeOrSurnameLikeOrTeam_NameLike(String name, String surname, String team_name);
 }
